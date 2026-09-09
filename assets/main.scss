@@ -45,10 +45,16 @@ $on-laptop: $bp-laptop - 1;  // wrapper padding / heading sizes step down below 
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    // Full-bleed nav bar: drop the site-wide content cap so the logo and
-    // nav links sit at the actual edges of the screen, not just the edges
-    // of the centered content column.
+    // Drop the site-wide content cap (the logo/nav positioning below is
+    // handled with its own padding instead).
     max-width: none;
+
+    // On PC-sized screens, inset the logo/nav by ~15% of the screen width
+    // on each side rather than sitting flush against the true edges.
+    @media (min-width: $bp-laptop) {
+      padding-left: 15%;
+      padding-right: 15%;
+    }
   }
 }
 
@@ -130,10 +136,16 @@ table tr:nth-child(even) {
 // still 100% of the container (never overflows) on narrow screens, and
 // only clamps to a fixed width once there's room to spare. Card/grid
 // layouts (homepage, header, footer) aren't affected since they don't use
-// these classes.
+// these classes. .post-header/.page-heading (the "About"/"Blog" <h1>s) get
+// the same treatment so the heading lines up with the body text below it
+// instead of staying flush against the far-left edge.
 .post-content,
-.post-list {
+.post-list,
+.post-header,
+.page-heading {
   max-width: min(100%, 47.5rem); // ~760px
+  margin-left: auto;
+  margin-right: auto;
 }
 
 // Resume-style experience entries (used on the About Me page)
