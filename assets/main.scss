@@ -1,0 +1,320 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+// Navy blue theme — override minima's default palette before importing it.
+$text-color:       #ffffff;
+$background-color: #0a1a33;
+$brand-color:      #5da9ff; // links / accents
+
+$grey-color:       #9fb3c8; // secondary text (meta, footer)
+$grey-color-light: #1f3a63; // borders, table stripes (dark navy, not a light tint)
+$grey-color-dark:  #ffffff; // site title, mobile nav icon
+
+@import "minima";
+
+// A couple of spots minima hardcodes rather than driving from variables.
+.site-header {
+  border-top-color: $brand-color;
+  border-bottom: none;
+  background-color: #0f2444;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+.site-title {
+  display: flex;
+  align-items: center;
+  float: none;
+
+  &:hover .site-logo {
+    opacity: 0.8;
+  }
+}
+
+.site-nav {
+  float: none;
+}
+
+.site-logo {
+  display: block;
+}
+
+.site-nav {
+  .page-link {
+    padding: 6px 4px;
+
+    &:hover {
+      color: $brand-color;
+      text-decoration: none;
+    }
+  }
+}
+
+pre,
+code {
+  background-color: #13294b;
+}
+
+table tr:nth-child(even) {
+  background-color: lighten($grey-color-light, 4%);
+}
+
+// Resume-style experience entries (used on the About Me page)
+.experience-entry {
+  margin-bottom: $spacing-unit / 2;
+  padding: 14px 18px;
+  background-color: #0f2444;
+  border-left: 4px solid $brand-color;
+  border-radius: 4px;
+}
+
+.experience-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.experience-company {
+  font-weight: 700;
+  @include relative-font-size(1.125);
+}
+
+.experience-dates {
+  color: $grey-color;
+  font-size: $small-font-size;
+  white-space: nowrap;
+}
+
+.experience-role {
+  margin-top: 2px;
+  color: $brand-color;
+  font-style: italic;
+}
+
+.site-footer {
+  padding: $spacing-unit / 2 0;
+
+  .footer-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+
+    @include media-query($on-palm) {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+  }
+}
+
+.footer-spacer {
+  @include media-query($on-palm) {
+    display: none;
+  }
+}
+
+.footer-tagline {
+  grid-column: 2;
+  margin-bottom: 0;
+  color: $grey-color;
+  text-align: center;
+}
+
+.contact-icons {
+  display: flex;
+  gap: 16px;
+  justify-self: end;
+
+  @include media-query($on-palm) {
+    justify-self: center;
+  }
+}
+
+.cert-entry {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 160px;
+  text-align: center;
+}
+
+.cert-name {
+  font-weight: 600;
+  color: $text-color;
+}
+
+.cert-badge-link {
+  display: block;
+
+  &:hover .cert-badge {
+    opacity: 0.85;
+  }
+}
+
+.cert-badge {
+  display: block;
+  transition: opacity 0.15s ease;
+}
+
+.social-icon-link {
+  display: inline-flex;
+  align-items: center;
+
+  .svg-icon {
+    width: 20px;
+    height: 20px;
+    padding-right: 0;
+    fill: $grey-color;
+  }
+
+  &:hover .svg-icon {
+    fill: $brand-color;
+  }
+}
+
+.post-hero {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto $spacing-unit;
+}
+
+.post-list-thumb-link {
+  display: block;
+  width: fit-content;
+
+  &:hover .post-list-thumb {
+    opacity: 0.85;
+  }
+}
+
+.post-list-thumb {
+  display: block;
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin: 8px 0;
+  transition: opacity 0.15s ease;
+}
+
+// Homepage
+.home-heading {
+  @include relative-font-size(2.625);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.home-subtitle {
+  color: $grey-color;
+  margin-bottom: $spacing-unit / 2;
+}
+
+.home-bio {
+  max-width: 640px;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: $spacing-unit / 2 0 $spacing-unit;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid $grey-color-light;
+  border-radius: 6px;
+  color: $text-color;
+  font-weight: 600;
+
+  &:hover {
+    border-color: $brand-color;
+    color: $brand-color;
+    text-decoration: none;
+  }
+}
+
+.home-divider {
+  margin: $spacing-unit 0;
+  border: none;
+  border-top: 1px solid $grey-color-light;
+}
+
+.home-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: $spacing-unit / 2;
+
+  h2 {
+    @include relative-font-size(1.375);
+    margin-bottom: 0;
+  }
+}
+
+.home-view-all {
+  font-size: $small-font-size;
+  white-space: nowrap;
+}
+
+.post-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-unit / 2;
+
+  @include media-query($on-laptop) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-query($on-palm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.post-card {
+  display: block;
+  padding: 16px;
+  border: 1px solid $grey-color-light;
+  border-radius: 8px;
+  color: $text-color;
+
+  &:hover {
+    border-color: $brand-color;
+    text-decoration: none;
+
+    .post-card-title {
+      color: $brand-color;
+    }
+  }
+}
+
+.post-card-date {
+  display: block;
+  margin-bottom: 4px;
+  color: $grey-color;
+  font-size: $small-font-size;
+}
+
+.post-card-title {
+  @include relative-font-size(1.125);
+  margin-bottom: 4px;
+}
+
+.post-card-excerpt {
+  margin-bottom: 0;
+  color: $grey-color;
+  font-size: $small-font-size;
+}
