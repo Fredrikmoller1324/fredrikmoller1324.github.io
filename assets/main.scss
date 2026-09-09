@@ -13,9 +13,9 @@ $grey-color:       #9fb3c8; // secondary text (meta, footer)
 $grey-color-light: #1f3a63; // borders, table stripes (dark navy, not a light tint)
 $grey-color-dark:  #ffffff; // site title, mobile nav icon
 
-// minima's default is 800px, which centers everything into a ~740px column —
-// feels cramped on a wide desktop monitor. Give it more room to breathe.
-$content-width:    1100px;
+// minima's default is 800px, which centers everything into a ~740px column,
+// leaving huge empty margins on a 1920px desktop screen. Use more of it.
+$content-width:    1440px;
 
 @import "minima";
 
