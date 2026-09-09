@@ -17,6 +17,22 @@ $grey-color-dark:  #ffffff; // site title, mobile nav icon
 // leaving huge empty margins on a 1920px desktop screen. Use more of it.
 $content-width:    1440px;
 
+// --- Responsive breakpoints ---------------------------------------------
+// mobile (320–480) is the unadorned base below; these three thresholds are
+// the tablet / laptop / wide-desktop steps up from it. $on-palm and
+// $on-laptop feed minima's own responsive plumbing (hamburger nav, footer
+// stacking, wrapper padding, heading step-down) so everything — theirs and
+// ours — shares one set of breakpoints instead of drifting apart.
+$bp-tablet:  768px;
+$bp-laptop:  1024px;
+$bp-desktop: 1440px;
+
+// minima's mixin queries "max-width: $device" (inclusive), while our own
+// breakpoints below query "min-width: $bp-*" (also inclusive) — subtract a
+// pixel so the two don't both claim the boundary width at once.
+$on-palm:   $bp-tablet - 1;  // nav collapses to a hamburger below $bp-tablet
+$on-laptop: $bp-laptop - 1;  // wrapper padding / heading sizes step down below $bp-laptop
+
 @import "minima";
 
 // A couple of spots minima hardcodes rather than driving from variables.
@@ -45,21 +61,36 @@ $content-width:    1440px;
 
 .site-nav {
   float: none;
-}
 
-.site-logo {
-  display: block;
-}
+  // minima's hamburger toggle/icon default to 36x36 — bump to a proper
+  // 44x44 tap target and keep the icon glyph centered inside it.
+  label[for="nav-trigger"] {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
 
-.site-nav {
+  .menu-icon {
+    width: 2.75rem;
+    height: 2.125rem;
+    padding-top: 0.875rem;
+  }
+
   .page-link {
-    padding: 6px 4px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.375rem 0.5rem;
 
     &:hover {
       color: $brand-color;
       text-decoration: none;
     }
   }
+}
+
+.site-logo {
+  display: block;
+  max-width: 100%;
 }
 
 pre,
@@ -72,17 +103,20 @@ table tr:nth-child(even) {
 }
 
 // Cap prose width for readability now that the wrapper itself is wider —
-// long lines of body text get hard to read otherwise. Card/grid layouts
-// (homepage, header, footer) aren't affected since they don't use these.
+// long lines of body text get hard to read otherwise. min() means it's
+// still 100% of the container (never overflows) on narrow screens, and
+// only clamps to a fixed width once there's room to spare. Card/grid
+// layouts (homepage, header, footer) aren't affected since they don't use
+// these classes.
 .post-content,
 .post-list {
-  max-width: 740px;
+  max-width: min(100%, 47.5rem); // ~760px
 }
 
 // Resume-style experience entries (used on the About Me page)
 .experience-entry {
   margin-bottom: $spacing-unit / 2;
-  padding: 14px 18px;
+  padding: 0.875rem 1.125rem;
   background-color: #0f2444;
   border-left: 4px solid $brand-color;
   border-radius: 4px;
@@ -93,7 +127,7 @@ table tr:nth-child(even) {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .experience-company {
@@ -108,7 +142,7 @@ table tr:nth-child(even) {
 }
 
 .experience-role {
-  margin-top: 2px;
+  margin-top: 0.125rem;
   color: $brand-color;
   font-style: italic;
 }
@@ -120,9 +154,9 @@ table tr:nth-child(even) {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
 
-    @include media-query($on-palm) {
+    @media (max-width: $on-palm) {
       grid-template-columns: 1fr;
       justify-items: center;
     }
@@ -130,7 +164,7 @@ table tr:nth-child(even) {
 }
 
 .footer-spacer {
-  @include media-query($on-palm) {
+  @media (max-width: $on-palm) {
     display: none;
   }
 }
@@ -144,10 +178,10 @@ table tr:nth-child(even) {
 
 .contact-icons {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
   justify-self: end;
 
-  @include media-query($on-palm) {
+  @media (max-width: $on-palm) {
     justify-self: center;
   }
 }
@@ -156,8 +190,8 @@ table tr:nth-child(even) {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  max-width: 160px;
+  gap: 0.5rem;
+  max-width: 10rem;
   text-align: center;
 }
 
@@ -167,7 +201,11 @@ table tr:nth-child(even) {
 }
 
 .cert-badge-link {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 
   &:hover .cert-badge {
     opacity: 0.85;
@@ -176,16 +214,21 @@ table tr:nth-child(even) {
 
 .cert-badge {
   display: block;
+  max-width: 100%;
+  height: auto;
   transition: opacity 0.15s ease;
 }
 
 .social-icon-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 
   .svg-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     padding-right: 0;
     fill: $grey-color;
   }
@@ -203,8 +246,11 @@ table tr:nth-child(even) {
 }
 
 .post-list-thumb-link {
-  display: block;
-  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 
   &:hover .post-list-thumb {
     opacity: 0.85;
@@ -213,19 +259,25 @@ table tr:nth-child(even) {
 
 .post-list-thumb {
   display: block;
-  width: 140px;
-  height: 140px;
+  width: 8.75rem;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  margin: 8px 0;
+  margin: 0.5rem 0;
   transition: opacity 0.15s ease;
 }
 
-// Homepage
+// Homepage ------------------------------------------------------------
+// Mobile-first: centered/stacked by default, then unstacked to a
+// left-aligned layout once there's enough width (tablet and up).
 .home-heading {
-  @include relative-font-size(2.625);
+  // scales smoothly between a 28px floor and a 42px ceiling instead of
+  // jumping at a breakpoint.
+  font-size: clamp(1.75rem, calc(1.1rem + 2.5vw), 2.625rem);
   letter-spacing: -1px;
-  line-height: 1;
-  margin-bottom: 8px;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
 }
 
 .home-subtitle {
@@ -234,19 +286,41 @@ table tr:nth-child(even) {
 }
 
 .home-bio {
-  max-width: 640px;
+  max-width: min(100%, 40rem); // ~640px
 }
 
 .home-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  gap: 0.75rem;
   margin: $spacing-unit / 2 0 $spacing-unit;
 }
 
+.home-heading,
+.home-subtitle,
+.home-bio {
+  text-align: center;
+}
+
+@media (min-width: $bp-tablet) {
+  .home-heading,
+  .home-subtitle,
+  .home-bio {
+    text-align: left;
+  }
+
+  .home-actions {
+    justify-content: flex-start;
+  }
+}
+
 .btn {
-  display: inline-block;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem; // 44px tap target
+  padding: 0.625rem 1.25rem;
   border: 1px solid $grey-color-light;
   border-radius: 6px;
   color: $text-color;
@@ -267,8 +341,10 @@ table tr:nth-child(even) {
 
 .home-section-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
+  gap: 0.5rem;
   margin-bottom: $spacing-unit / 2;
 
   h2 {
@@ -278,27 +354,37 @@ table tr:nth-child(even) {
 }
 
 .home-view-all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: $small-font-size;
   white-space: nowrap;
 }
 
+// Post-card grid: explicit mobile-first steps rather than relying on
+// auto-fit/minmax, so the column count is predictable — 1 on mobile,
+// 2 from tablet, 3 from laptop up.
 .post-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: $spacing-unit / 2;
+}
 
-  @include media-query($on-laptop) {
+@media (min-width: $bp-tablet) {
+  .post-cards {
     grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  @include media-query($on-palm) {
-    grid-template-columns: 1fr;
+@media (min-width: $bp-laptop) {
+  .post-cards {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .post-card {
   display: block;
-  padding: 16px;
+  padding: 1rem;
   border: 1px solid $grey-color-light;
   border-radius: 8px;
   color: $text-color;
@@ -315,18 +401,28 @@ table tr:nth-child(even) {
 
 .post-card-date {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
   color: $grey-color;
   font-size: $small-font-size;
 }
 
 .post-card-title {
   @include relative-font-size(1.125);
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
 }
 
 .post-card-excerpt {
   margin-bottom: 0;
   color: $grey-color;
   font-size: $small-font-size;
+}
+
+// Fluid heading sizes for minima's own title classes too, so they scale
+// smoothly across breakpoints instead of jumping.
+.page-heading {
+  font-size: clamp(1.5rem, calc(1rem + 2vw), 2rem);
+}
+
+.post-title {
+  font-size: clamp(1.75rem, calc(1rem + 3vw), 2.625rem);
 }
