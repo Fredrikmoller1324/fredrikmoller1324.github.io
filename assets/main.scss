@@ -13,6 +13,10 @@ $grey-color:       #9fb3c8; // secondary text (meta, footer)
 $grey-color-light: #1f3a63; // borders, table stripes (dark navy, not a light tint)
 $grey-color-dark:  #ffffff; // site title, mobile nav icon
 
+// minima's default is 800px, which centers everything into a ~740px column —
+// feels cramped on a wide desktop monitor. Give it more room to breathe.
+$content-width:    1100px;
+
 @import "minima";
 
 // A couple of spots minima hardcodes rather than driving from variables.
@@ -65,6 +69,14 @@ code {
 
 table tr:nth-child(even) {
   background-color: lighten($grey-color-light, 4%);
+}
+
+// Cap prose width for readability now that the wrapper itself is wider —
+// long lines of body text get hard to read otherwise. Card/grid layouts
+// (homepage, header, footer) aren't affected since they don't use these.
+.post-content,
+.post-list {
+  max-width: 740px;
 }
 
 // Resume-style experience entries (used on the About Me page)
