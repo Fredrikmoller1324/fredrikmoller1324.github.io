@@ -1,0 +1,31 @@
+title: Fredrik Möller
+email: fredrik@fourone.se
+description: >-
+  Personal site, resume, and blog.
+baseurl: ""
+url: "https://fredrikmoller1324.github.io"
+
+theme: minima
+
+minima:
+  skin: classic
+  social_links:
+    email: fredrik@fourone.se
+    github: fredrikmoller1324
+
+header_pages:
+  - about.md
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
